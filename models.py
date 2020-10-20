@@ -16,24 +16,24 @@ class Solicitud(db.Model):
     cantidad = db.Column(db.Integer)
     precio_unidad = db.Column(db.Float(precision=10)) 
     estado_solicitud = db.Column(db.String(50))
-    fecha_emision = db.Column(db.DateTime, default= datetime.datetime.now)
-    total = db.Column(db.Float(precision=10))
+    total = db.Column(db.Float())
     observacion = db.Column(db.String(100))
+    fecha_emision = db.Column(db.DateTime, default= datetime.datetime.now)
 
 
-    def __init__(self, nombre_empleado, sucursal, proveedor, insumo_nombre,descripcion, marca, cantidad, precio_unidad, estado_solicitud, fecha_emision, total, observacion):
-            self.nombre_empleado = nombre
-            self.sucursal = stock
-            self.proveedor = descripcion
+    def __init__(self, nombre_empleado, sucursal, proveedor, insumo_nombre,descripcion, marca, cantidad, precio_unidad, estado_solicitud,total, observacion):
+            self.nombre_empleado = nombre_empleado
+            self.sucursal = sucursal
+            self.proveedor = proveedor
             self.insumo_nombre = insumo_nombre
             self.descripcion = descripcion
             self.marca = marca
             self.cantidad = cantidad
             self.precio_unidad = precio_unidad
             self.estado_solicitud = estado_solicitud
-            self.fecha_emision = fecha_emision
             self.total = total
             self.observacion = observacion
+            
     
 
 

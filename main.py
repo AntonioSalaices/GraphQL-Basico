@@ -21,7 +21,7 @@ ma = Marshmallow()
 # Creación de Esquema
 class SolicitudSchema(ma.Schema):
     class Meta:
-        fields = ('id','nombre_empleado', 'sucursal','proveedor', 'insumo_nombre', 'descripcion', 'marca', 'cantidad', 'precio_unidad', 'estado_solicitud','fecha_emision', 'total', 'observacion')
+        fields = ('id','nombre_empleado', 'sucursal','proveedor', 'insumo_nombre', 'descripcion', 'marca', 'cantidad', 'precio_unidad', 'estado_solicitud', 'total', 'observacion', 'fecha_emision')
 
 # Inicializando esquema
 solicitud_schema = SolicitudSchema()
@@ -60,7 +60,7 @@ def get_all_solicitudes():
 @app.route('/solicitudes/<id>', methods=['GET'])
 def get_solicitud(id):
     solicitud = Solicitud.query.get(id)
-    return solicitudes_schema.jsonify(solicitud)
+    return solicitud_schema.jsonify(solicitud)
 
 # Elimina una solicitud
 @app.route('/solicitudes/<id>', methods=['DELETE'])
