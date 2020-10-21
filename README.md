@@ -5,3 +5,5 @@ python - venv myapi(o nombre que le quieras poner al entorno virtual), la versi�
 
 3.- Una vez instaladas las dependencias, procederemos a crear la bd en phpmyadmin con el nombre "api_superavila", y a continuación
 ponemos el siguiente comando en consola para que el ORM SqlAlchemy genere las tablas automáticamente: "python main.py"
+
+4.- La api está corriendo y lista para usarse.

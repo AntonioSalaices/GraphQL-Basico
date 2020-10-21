@@ -3,9 +3,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask_wtf import CSRFProtect
-from flask import flash
 from flask import json, jsonify
-from flask import g
 from config import DevelopmentConfig
 from models import db, Solicitud
 import os
@@ -21,7 +19,7 @@ ma = Marshmallow()
 # Creación de Esquema
 class SolicitudSchema(ma.Schema):
     class Meta:
-        fields = ('id','nombre_empleado', 'sucursal','proveedor', 'insumo_nombre', 'descripcion', 'marca', 'cantidad', 'precio_unidad', 'estado_solicitud', 'total', 'observacion', 'fecha_emision')
+        fields = ('id','nombre_empleado', 'sucursal','proveedor', 'insumo_nombre', 'descripcion', 'marca', 'cantidad_solicitada','cantidad_recibida', 'precio_unidad', 'estado_solicitud', 'total', 'observacion', 'fecha_emision')
 
 # Inicializando esquema
 solicitud_schema = SolicitudSchema()
@@ -37,13 +35,14 @@ def post_solicitud():
     insumo_nombre = request.json['insumo_nombre']
     descripcion = request.json['descripcion']
     marca = request.json['marca']
-    cantidad = request.json['cantidad']
+    cantidad_solicitada = request.json['cantidad_solicitada']
+    cantidad_recibida = request.json['cantidad_recibida']
     precio_unidad = request.json['precio_unidad']
     estado_solicitud = request.json['estado_solicitud']
     total = request.json['total']
     observacion = request.json['observacion']
 
-    new_solicitud = Solicitud(nombre_empleado, sucursal, proveedor,insumo_nombre, descripcion, marca, cantidad, precio_unidad, estado_solicitud, total, observacion)
+    new_solicitud = Solicitud(nombre_empleado, sucursal, proveedor,insumo_nombre, descripcion, marca, cantidad_solicitada, cantidad_recibida, precio_unidad, estado_solicitud, total, observacion)
     db.session.add(new_solicitud)
     db.session.commit()
 
@@ -80,7 +79,8 @@ def update_solicitud(id):
     insumo_nombre = request.json['insumo_nombre']
     descripcion = request.json['descripcion']
     marca = request.json['marca']
-    cantidad = request.json['cantidad']
+    cantidad_solicitada = request.json['cantidad_solicitada']
+    cantidad_recibida = request.json['cantidad_recibida']
     precio_unidad = request.json['precio_unidad']
     estado_solicitud = request.json['estado_solicitud']
     total = request.json['total']
@@ -92,11 +92,23 @@ def update_solicitud(id):
     solicitud.insumo_nombre =insumo_nombre
     solicitud.descripcion = descripcion
     solicitud.marca = marca
-    solicitud.cantidad =cantidad
+    solicitud.cantidad_solicitada =cantidad_solicitada
+    solicitud.cantidad_recibida =cantidad_recibida
     solicitud.precio_unidad = precio_unidad
     solicitud.estado_solicitud = estado_solicitud
     solicitud.total = total
     solicitud.observacion = observacion
+
+    db.session.commit()
+
+    return solicitud_schema.jsonify(solicitud)
+
+@app.route('/solicitudes/<id>', methods=['PATCH'])
+def update_envio(id):
+    solicitud = Solicitud.query.get(id)
+    estado_solicitud = request.json['estado_solicitud']
+
+    solicitud.estado_solicitud = estado_solicitud
 
     db.session.commit()
 
