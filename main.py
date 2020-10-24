@@ -79,7 +79,6 @@ def update_solicitud(id):
     cantidad_solicitada = request.json['cantidad_solicitada']
     cantidad_recibida = request.json['cantidad_recibida']
     precio_unidad = request.json['precio_unidad']
-    estado_solicitud = request.json['estado_solicitud']
     total = request.json['total']
     observacion = request.json['observacion']
 
@@ -92,7 +91,6 @@ def update_solicitud(id):
     solicitud.cantidad_solicitada =cantidad_solicitada
     solicitud.cantidad_recibida =cantidad_recibida
     solicitud.precio_unidad = precio_unidad
-    solicitud.estado_solicitud = estado_solicitud
     solicitud.total = total
     solicitud.observacion = observacion
 
